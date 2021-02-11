@@ -36,7 +36,7 @@ Before setting up the server instances using the default settings set by the SoD
 | Advanced    |                Yes                |            Car, foot and bike            | `advanced`  |
 
 
-#### On MacOS or Linux {#maclinuxguide}
+#### On MacOS or Linux
 
 Once you chose which setup is the most fitting with what required by your project, you need to carry out two steps:
 
@@ -48,6 +48,7 @@ Once you chose which setup is the most fitting with what required by your projec
      - `OVERPASS_PLANET_URL=` _add the link to the `.osm.bz2` file (usually under the section `Other Formats and Auxiliary Files`)_
    - To select the replication server, go to <http://download.openstreetmap.fr/replication/> and find the same country or region you selected above. When found, navigate to the `minute` folder and copy the URL after the `=` of the following variable:
      - `OVERPASS_DIFF_URL=` _add the URL of the replication server (needs to end with `/minute/`)_
+     
 **2.** Then, just use the following commands to download the map and start the containers:
 
 ```bash
@@ -58,8 +59,10 @@ Once you chose which setup is the most fitting with what required by your projec
 
 #### On Windows
 
-**1.** Follow **step 1** of the [MacOS or Linux guide](#maclinuxguide) with the only difference that you also need to download the `<your-location>-latest.osm.pbf` data for your location of interest to `docker/osrm/data` from <https://download.geofabrik.de/>
+**1.** Follow **step 1** of the _MacOS or Linux guide_ with the only difference that you also need to download the `<your-location>-latest.osm.pbf` data for your location of interest to `docker/osrm/data` from <https://download.geofabrik.de/>
+
 **2.** `cd` to the folder of your preferred choice of setup, for example `cd docker base`
+
 **3.** Then, with Docker Desktop open, start docker compose with `docker-compose up`
 
 The complete install procedure will take at least one hour. If you run into any problem, please look at the [troubleshooting section](#troubleshooting) below or open an [issue](#issue).
