@@ -38,10 +38,20 @@ Before setting up the server instances using the default settings set by the SoD
 
 #### On MacOS or Linux
 
-Once you chose which setup is the most fitting with what required by your project, you can use the following commands to download the map and start the containers:
+Once you chose which setup is the most fitting with what required by your project, you need to carry out two steps:
+
+1. Go to the docker folder for the use case you want to setup and modify what comes after the `=` for the following variables in the `.env` file:
+   - To select a specific region to use with the OpenStreetMap server, go to <https://download.geofabrik.de/> and find the region of interest. Once found, add the name of the country and of the region (or subregion) after the `=` in the following two variable in the `.env` file:
+     - `COUNTRY_MAP=` _add name of the country_
+     - `REGION=` _add name of the region or subregion_
+   - Without country, find the link to the _map file_ that ends with `.osm.bz2` (usually under the section `Other Formats and Auxiliary Files`) in the same webpage of the country or region you selected and copy the link after the `=` in the following variable in the `.env` file:
+     - `OVERPASS_PLANET_URL=` _add the link to the `.osm.bz2` file (usually under the section `Other Formats and Auxiliary Files`)_
+   - To select the replication server, go to <http://download.openstreetmap.fr/replication/> and find the same region you used above. When found, copy the url after clicking on the `minute` folder, after the `=` of the following variable:
+     - `OVERPASS_DIFF_URL=` _add the url of your replication server which needs to end with `/minute/`_
+2. Then, just use the following commands to download the map and start the containers:
 
 ```bash
-  # Assumes you are in the root folder of this repository
+  # You need to be in the **root** folder of the repository
   cd docker
   bash ./build.sh <name-of-the-chose-docker-setup>
 ```
