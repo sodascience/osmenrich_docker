@@ -24,7 +24,7 @@ We run instances of the Overpass API and of OSRM via `Docker`.
 
 We assume that `docker` is installed and running on your machine. If that is not the case, please head to the [Docker website](https://www.docker.com/products/docker-desktop) to download Docker Desktop.
 
-Before setting up the server instances using the default settings set by the SoDa science team you need to the setup that most resembles the objective of your project. The table below offers an overview of the choices that we provide out-of-the-box
+Before setting up the server instances using the default settings set by the SoDa science team you need to the setup that most resembles the objective of your project. The table below offers an overview of the choices that we currently provide.
 
 
 | Version     | Overpass server/ <br />OSM server | OSRM server for<br />distances/durations | Name to use |
@@ -36,19 +36,19 @@ Before setting up the server instances using the default settings set by the SoD
 | Advanced    |                Yes                |            Car, foot and bike            | `advanced`  |
 
 
-#### On MacOS or Linux
+#### On MacOS or Linux {#maclinuxguide}
 
 Once you chose which setup is the most fitting with what required by your project, you need to carry out two steps:
 
-1. Go to the docker folder for the use case you want to setup and modify what comes after the `=` for the following variables in the `.env` file:
+**1.** Go to the docker folder for the use case you want to setup and modify what comes after the `=` for the following variables in the `.env` file:
    - To select a specific region to use with the OpenStreetMap server, go to <https://download.geofabrik.de/> and find the region of interest. Once found, add the name of the country and of the region (or subregion) after the `=` in the following two variable in the `.env` file:
      - `COUNTRY_MAP=` _add name of the country_
      - `REGION=` _add name of the region or subregion_
-   - Without country, find the link to the _map file_ that ends with `.osm.bz2` (usually under the section `Other Formats and Auxiliary Files`) in the same webpage of the country or region you selected and copy the link after the `=` in the following variable in the `.env` file:
+   - Within the same webpage, find the link to the _map file_ that ends with `.osm.bz2` (usually under the section `Other Formats and Auxiliary Files`) for the country or region you previoulsy selected and copy this link after the `=` in the following variable in the `.env` file:
      - `OVERPASS_PLANET_URL=` _add the link to the `.osm.bz2` file (usually under the section `Other Formats and Auxiliary Files`)_
-   - To select the replication server, go to <http://download.openstreetmap.fr/replication/> and find the same region you used above. When found, copy the url after clicking on the `minute` folder, after the `=` of the following variable:
-     - `OVERPASS_DIFF_URL=` _add the url of your replication server which needs to end with `/minute/`_
-2. Then, just use the following commands to download the map and start the containers:
+   - To select the replication server, go to <http://download.openstreetmap.fr/replication/> and find the same country or region you selected above. When found, navigate to the `minute` folder and copy the URL after the `=` of the following variable:
+     - `OVERPASS_DIFF_URL=` _add the URL of the replication server (needs to end with `/minute/`)_
+**2.** Then, just use the following commands to download the map and start the containers:
 
 ```bash
   # You need to be in the **root** folder of the repository
@@ -58,9 +58,9 @@ Once you chose which setup is the most fitting with what required by your projec
 
 #### On Windows
 
-1. Download the `<your-location>-latest.osm.pbf` data for your location of interest to `docker/osrm/data` (in this example we are using `netherlands-latest.osm.pbf`)
-2. `cd` to your preferred choice of setup, for example `cd docker base`
-3. `docker-compose up`
+**1.** Follow **step 1** of the [MacOS or Linux guide](#maclinuxguide) with the only difference that you also need to download the `<your-location>-latest.osm.pbf` data for your location of interest to `docker/osrm/data` from <https://download.geofabrik.de/>
+**2.** `cd` to the folder of your preferred choice of setup, for example `cd docker base`
+**3.** Then, with Docker Desktop open, start docker compose with `docker-compose up`
 
 The complete install procedure will take at least one hour. If you run into any problem, please look at the [troubleshooting section](#troubleshooting) below or open an [issue](#issue).
 
