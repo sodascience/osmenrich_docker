@@ -1,0 +1,3 @@
+# Ignore all data used for Docker but keep data folder
+*
+!.gitignore

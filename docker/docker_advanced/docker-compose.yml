@@ -1,0 +1,92 @@
+version: "3.8"
+
+services:
+  # Overpass server API
+  overpass-api:
+    container_name: overpass-api
+    hostname: overpass-api
+    image: wiktorn/overpass-api
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      - OVERPASS_META=${OVERPASS_META}
+      - OVERPASS_MODE=${OVERPASS_MODE}
+      - OVERPASS_PLANET_URL=${OVERPASS_PLANET_URL}
+      - OVERPASS_DIFF_URL=${OVERPASS_DIFF_URL}
+      - OVERPASS_RULES_LOAD=${OVERPASS_RULES_LOAD}
+    env_file:
+      - .env
+    depends_on:
+      - nginx-proxy
+    networks:
+      - docker-network
+
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/
+    ports:
+      - "8080:80"
+      - "443:443"
+    depends_on:
+      - osrm-foot
+      - osrm-car
+      - osrm-bicycle
+    networks:
+      - docker-network
+
+  # OSRM Server API
+  osrm-foot:
+    container_name: osrm-foot
+    restart: unless-stopped
+    build:
+      context: ./osrm
+      dockerfile: Dockerfile
+      args:
+        - NAME=osrm-foot
+        - COUNTRY_MAP=${COUNTRY_MAP}
+        - REGION=${REGION}
+        - PROFILE=foot
+    env_file: .env
+    image: osrm-foot
+    networks:
+      - docker-network
+
+  osrm-car:
+    container_name: osrm-car
+    restart: unless-stopped
+    build:
+      context: ./osrm
+      dockerfile: Dockerfile
+      args:
+        - NAME=osrm-car
+        - COUNTRY_MAP=${COUNTRY_MAP}
+        - REGION=${REGION}
+        - PROFILE=driving
+    env_file: .env
+    image: osrm-car
+    networks:
+      - docker-network
+
+  osrm-bicycle:
+    container_name: osrm-bicycle
+    restart: unless-stopped
+    build:
+      context: ./osrm
+      dockerfile: Dockerfile
+      args:
+        - NAME=osrm-cycling
+        - COUNTRY_MAP=${COUNTRY_MAP}
+        - REGION=${REGION}
+        - PROFILE=bicycle
+    env_file: .env
+    image: osrm-bicycle
+    networks:
+      - docker-network
+
+# Docker Networks
+networks:
+  docker-network:
