@@ -109,3 +109,7 @@ The workflow to contribute with Gitflow becomes:
 ## License
 
 The `osmenrich_docker` repository is published under the MIT license.
+
+## Contact
+
+Do you have questions, suggestions, or remarks on the technical implementation? File an issue in the issue tracker or feel free to contact [Erik-Jan van Kesteren](https://github.com/vankesteren).
